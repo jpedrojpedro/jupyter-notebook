@@ -1,0 +1,14 @@
+services:
+  jupyter:
+    image: jupyter/scipy-notebook:x86_64-ubuntu-22.04
+    user: root
+    environment:
+      - CHOWN_HOME=yes
+    volumes:
+      - ./:/home/jovyan/work/
+    ports:
+      - 8888:8888
+    # We add a command to upgrade nbformat before starting the notebook
+    command: >
+      bash -c "pip install --upgrade nbformat pandas && 
+      start-notebook.sh --NotebookApp.token='' --NotebookApp.iopub_data_rate_limit=1.0e10"
