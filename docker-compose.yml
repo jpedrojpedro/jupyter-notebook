@@ -2,13 +2,20 @@ services:
   jupyter:
     image: jupyter/scipy-notebook:x86_64-ubuntu-22.04
     user: root
+    shm_size: '2gb'
     environment:
       - CHOWN_HOME=yes
     volumes:
       - ./:/home/jovyan/work/
     ports:
       - 8888:8888
-    # We add a command to upgrade nbformat before starting the notebook
+    deploy:
+      resources:
+        limits:
+          memory: 4GB
     command: >
-      bash -c "pip install --upgrade nbformat pandas && 
-      start-notebook.sh --NotebookApp.token='' --NotebookApp.iopub_data_rate_limit=1.0e10"
+      bash -c "pip install --upgrade nbformat 'numpy<2' pandas numexpr bottleneck tabulate &&
+      start-notebook.sh --NotebookApp.token=''
+      --NotebookApp.iopub_data_rate_limit=1.0e10
+      --ServerApp.shutdown_no_activity_timeout=0
+      --ServerApp.answer_yes=True"
