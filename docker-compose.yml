@@ -14,7 +14,7 @@ services:
         limits:
           memory: 4GB
     command: >
-      bash -c "pip install --upgrade nbformat 'numpy<2' pandas numexpr bottleneck tabulate &&
+      bash -c "pip install --upgrade nbformat 'numpy<2' pandas numexpr bottleneck tabulate duckdb &&
       start-notebook.sh --NotebookApp.token=''
       --NotebookApp.iopub_data_rate_limit=1.0e10
       --ServerApp.shutdown_no_activity_timeout=0
