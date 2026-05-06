@@ -224,3 +224,7 @@ notebooks/
 
 # SQLite
 *.db
+
+# PySpark
+*.jar
+
