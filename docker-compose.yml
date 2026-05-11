@@ -2,9 +2,11 @@ services:
   jupyter:
     image: jupyter/scipy-notebook:x86_64-ubuntu-22.04
     user: root
-    shm_size: '2gb'
+    shm_size: '4gb'
     environment:
       - CHOWN_HOME=yes
+      - JUPYTER_KSC_MAX_WORKERS=4
+    mem_swappiness: 0
     volumes:
       - ./:/home/jovyan/work/
     ports:
@@ -12,7 +14,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4GB
+          memory: 8GB
     command: >
       bash -c "pip install --upgrade nbformat 'numpy<2' pandas numexpr bottleneck tabulate duckdb &&
       start-notebook.sh --NotebookApp.token=''
